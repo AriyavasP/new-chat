@@ -6,7 +6,7 @@ import { ChatCompletion, ChatCompletionMessageParam } from 'openai/resources';
 export class AppService {
   async chatAI(message: string) {
     const openai = new OpenAI({
-      apiKey: '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',
+      apiKey: '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',
     });
     let responseText = '';
     const stream = await openai.chat.completions.create({
