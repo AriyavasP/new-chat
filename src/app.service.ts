@@ -1,12 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { OpenAI } from 'openai';
 import { ChatCompletion, ChatCompletionMessageParam } from 'openai/resources';
 
 @Injectable()
 export class AppService {
+  constructor(
+    @Inject(ConfigService) private configService: ConfigService,
+  ) {}
   async chatAI(message: string) {
     const openai = new OpenAI({
-      apiKey: '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',
+      apiKey: this.configService.get('OPENAI_API_KEY'),
     });
     let responseText = '';
     const stream = await openai.chat.completions.create({
