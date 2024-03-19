@@ -7,7 +7,7 @@ async function bootstrap() {
     allowedHeaders:"*",
     origin: "*"
   });
-
+  app.enableVersioning();
   await app.listen(3000);
 }
 bootstrap();
