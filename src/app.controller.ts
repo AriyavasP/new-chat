@@ -22,6 +22,7 @@ export class AppController {
   ): Promise<IOpenAIResponse> {
     try {
       const chat = await this.appService.chatAI(message);
+      // const chat = await this.appService.test();
       const response: IOpenAIResponse = {
         status: HttpStatus.OK,
         message: chat,

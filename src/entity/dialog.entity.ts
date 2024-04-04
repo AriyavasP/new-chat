@@ -13,4 +13,10 @@ export class Dialogs {
 
   @CreateDateColumn({ type: 'timestamp' })
   createTime: Date;
+
+  @Column()
+  topic: string;
+
+  @Column({ default: false })
+  fromSystem: boolean;
 }
