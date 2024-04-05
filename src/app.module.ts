@@ -1,9 +1,12 @@
-import { Module } from '@nestjs/common';
+import { Logger, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Dialogs } from './entity/dialog.entity';
+import { LoggingMiddleware } from './logger/logger.service';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { ResponseInterceptor } from './logger/response.interceptor';
 
 @Module({
   imports: [
@@ -30,6 +33,15 @@ import { Dialogs } from './entity/dialog.entity';
     TypeOrmModule.forFeature([Dialogs]),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    LoggingMiddleware, // Register LoggingMiddleware as a provider
+    Logger,
+  ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggingMiddleware).forRoutes('*');
+  }
+}
+

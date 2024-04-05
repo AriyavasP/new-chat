@@ -51,7 +51,7 @@ export class AppService {
         const content = chunk.choices[0]?.delta?.content;
         if (content) {
           responseText += content;
-          process.stdout.write(content);
+          // process.stdout.write(content);
         }
       }
       await Promise.all([
